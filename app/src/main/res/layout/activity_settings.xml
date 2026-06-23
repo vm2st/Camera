@@ -314,6 +314,11 @@
                         tools:text="@string/minimize_latency" />
 
                 </RelativeLayout>
+                <TextView
+                    style="@style/SettingsSectionLabelStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fork by vm2 studios" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

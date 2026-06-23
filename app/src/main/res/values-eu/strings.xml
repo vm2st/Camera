@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_launcher_name">Kamara</string>
+    <string name="app_launcher_name">VKamara</string>
     <string name="capture_mode">Kaptura-modua</string>
     <string name="maximize_quality">Kalitatea maximizatu</string>
     <string name="minimize_latency">Latentzia minimizatu</string>

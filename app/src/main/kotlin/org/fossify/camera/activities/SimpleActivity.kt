@@ -1,7 +1,10 @@
 package org.fossify.camera.activities
 
+import android.graphics.Color
+import android.os.Bundle
 import org.fossify.camera.R
 import org.fossify.commons.activities.BaseSimpleActivity
+import org.fossify.commons.extensions.baseConfig
 
 open class SimpleActivity : BaseSimpleActivity() {
     override fun getAppIconIDs() = arrayListOf(
@@ -29,4 +32,9 @@ open class SimpleActivity : BaseSimpleActivity() {
     override fun getAppLauncherName() = getString(R.string.app_launcher_name)
 
     override fun getRepositoryName() = "Camera"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        baseConfig.primaryColor = Color.parseColor("#892929")
+        super.onCreate(savedInstanceState)
+    }
 }

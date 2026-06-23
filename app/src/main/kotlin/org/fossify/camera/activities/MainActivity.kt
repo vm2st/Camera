@@ -111,9 +111,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener, Camera
         } else {
             window.addFlags(
                 WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
-                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
     }
@@ -320,7 +320,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener, Camera
 
             val systemBarsInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             val marginBottom = systemBarsInsets.bottom +
-                    resources.getDimensionPixelSize(org.fossify.commons.R.dimen.bigger_margin)
+                resources.getDimensionPixelSize(org.fossify.commons.R.dimen.bigger_margin)
 
             binding.shutter.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = marginBottom
@@ -398,6 +398,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener, Camera
             settings.setShadowIcon(R.drawable.ic_settings_vector)
             settings.setOnClickListener { launchSettings() }
             changeResolution.setOnClickListener { mPreview?.showChangeResolution() }
+
+            // Исправленный блок: достаем кнопку напрямую из вьюхи по ID
+            val githubButton = root.findViewById<com.google.android.material.button.MaterialButton>(R.id.open_github)
+            githubButton?.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/vm2st/Camera"))
+                startActivity(intent)
+            }
         }
 
         shutter.setOnClickListener { shutterPressed() }
@@ -457,7 +464,6 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener, Camera
     private fun initModeSwitcher() {
         val gestureDetector = GestureDetectorCompat(this, object : GestureDetectorListener() {
             override fun onDown(e: MotionEvent): Boolean {
-                // we have to return true here so ACTION_UP (and onFling) can be dispatched
                 return true
             }
 
@@ -663,6 +669,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener, Camera
     }
 
     private fun animateViews(degrees: Int) = binding.apply {
+        val githubButton = layoutTop.root.findViewById<View>(R.id.open_github)
         val views = arrayOf(
             toggleCamera,
             layoutTop.toggleTimer,
@@ -683,6 +690,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener, Camera
         for (view in views) {
             rotate(view, degrees)
         }
+
+        // Поворачиваем кнопку GitHub, если она нашлась на экране
+        githubButton?.let { rotate(it, degrees) }
+
         mediaSizeToggleGroup?.children?.forEach { child ->
             rotate(child, degrees)
         }
